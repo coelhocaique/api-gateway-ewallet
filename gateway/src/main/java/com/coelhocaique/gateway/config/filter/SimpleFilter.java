@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 import com.netflix.zuul.ZuulFilter;
 import com.netflix.zuul.context.RequestContext;
 
-@Component
+//@Component
 public class SimpleFilter extends ZuulFilter {
 
 	private static Logger log = LoggerFactory.getLogger(SimpleFilter.class);

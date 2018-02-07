@@ -20,32 +20,29 @@ import org.springframework.web.bind.annotation.RestController;
 import com.coelhocaique.user.dto.UserDTO;
 import com.coelhocaique.user.model.User;
 import com.coelhocaique.user.repository.UserRepository;
+import com.coelhocaique.user.service.UserService;
 
 @RequestMapping("/")
 @RestController
 public class UserResource {
 	
 	@Autowired
-	private UserRepository userRepository;
+	private UserService userService;
 	
 	@PostMapping
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	@Transactional
 	public ResponseEntity<UserDTO> create(@RequestBody @Valid UserDTO userDTO){
-		User user = new User();
-		BeanUtils.copyProperties(userDTO,user);
-		user = userRepository.save(user);
-		BeanUtils.copyProperties(user,userDTO);
+		
+		userDTO = userService.create(userDTO);
+		
 		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
 	}
 	
 	@GetMapping("/{id}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	@Transactional
 	public ResponseEntity<UserDTO> get(@PathVariable("id") String id){
-		UserDTO userDTO = new UserDTO();
-		BeanUtils.copyProperties(userRepository.findOne(id),userDTO);
+		
 		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.OK);
 	}
 }

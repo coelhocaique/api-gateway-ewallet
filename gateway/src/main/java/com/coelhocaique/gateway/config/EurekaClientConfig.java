@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.coelhocaique.gateway.config;
 
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
