@@ -1,0 +1,8 @@
+zuul:
+    ignored-patterns:
+        '**/empresa/exclude'
+ribbon:
+    eureka:
+        enabled: true
+    ConnectTimeout: 30000
+    ReadTimeout: 30000
