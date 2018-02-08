@@ -13,9 +13,12 @@ import com.coelhocaique.user.repository.UserRepository;
 import com.coelhocaique.user.service.UserService;
 import com.coelhocaique.user.utils.UserUtils;
 
+import lombok.Setter;
+
 @Service
 public class UserServiceImpl implements UserService {
 	
+	@Setter
 	@Autowired
 	private UserRepository userRepository;
 
@@ -38,20 +41,14 @@ public class UserServiceImpl implements UserService {
 		user.ifPresent(userRepository::delete);
 							  
 		return user.map(UserParser::toDTO)
-					.orElse(UserDTO.builder()
-									.code(HttpStatus.NO_CONTENT.value())
-									.returnMessage("User not found.")
-									.build());
+					.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, "User not found."));
 	}
 
 	@Override
 	public UserDTO find(String id) {
 		return Optional.ofNullable(userRepository.findOne(id))
 						.map(UserParser::toDTO)
-						.orElse(UserDTO.builder()
-										.code(HttpStatus.NO_CONTENT.value())
-										.returnMessage("User not found.")
-										.build());
+						.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, "User not found."));
 	}
 
 	@Override
@@ -59,10 +56,7 @@ public class UserServiceImpl implements UserService {
 		String[] decodedKey = UserUtils.decodeKey(key);
 		return userRepository.findByIdAndUsername(decodedKey[0], decodedKey[1])
 							.map(UserParser::toDTO)
-							.orElse(UserDTO.builder()
-										.code(HttpStatus.BAD_REQUEST.value())
-										.returnMessage("Invalid key.")
-										.build());
+							.orElse(UserParser.toDTO(HttpStatus.BAD_REQUEST, "Invalid key."));
 	}
 
 }

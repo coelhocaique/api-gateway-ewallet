@@ -1,6 +1,3 @@
-zuul:
-    ignored-patterns:
-        '**/empresa/exclude'
 ribbon:
     eureka:
         enabled: true

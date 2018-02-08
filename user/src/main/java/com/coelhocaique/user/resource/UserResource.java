@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.coelhocaique.user.dto.UserDTO;
 import com.coelhocaique.user.service.UserService;
 
-@RequestMapping("/")
+@RequestMapping("/v1")
 @RestController
 public class UserResource {
 	
