@@ -22,7 +22,7 @@ public class UserParser {
 		UserDTO dto = null;
 		
 		if(entity != null){
-			entity = new User();
+			dto = new UserDTO();
 			BeanUtils.copyProperties(entity, dto);
 		}
 		

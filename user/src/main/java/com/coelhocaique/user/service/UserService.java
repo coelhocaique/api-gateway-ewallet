@@ -6,11 +6,9 @@ public interface UserService {
 	
 	UserDTO create(UserDTO userDTO);
 	
-	UserDTO update(UserDTO userDTO);
-	
-	UserDTO delete(UserDTO userDTO);
-	
-	UserDTO find(String userName);
+	UserDTO delete(String key);
 
-	UserDTO findById(String id);
+	UserDTO find(String id);
+
+	UserDTO authenticate(String key);
 }

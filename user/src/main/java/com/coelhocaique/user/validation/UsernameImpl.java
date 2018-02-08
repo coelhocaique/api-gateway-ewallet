@@ -5,12 +5,12 @@ import javax.validation.ConstraintValidatorContext;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.coelhocaique.user.service.UserService;
+import com.coelhocaique.user.repository.UserRepository;
 
 public class UsernameImpl implements ConstraintValidator<Username, String> {
 	
 	@Autowired
-	private UserService userService;
+	private UserRepository userRepository;
 	
 	@Override
 	public void initialize(Username arg0) {
@@ -19,7 +19,7 @@ public class UsernameImpl implements ConstraintValidator<Username, String> {
 
 	@Override
 	public boolean isValid(String content, ConstraintValidatorContext arg1) {
-		return userService.find(content) == null;
+		return !userRepository.existsByUsername(content);
 	}
 
 }
