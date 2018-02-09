@@ -1,6 +1,3 @@
-/**
- * 
- */
 package com.coelhocaique.wallet.resource.advice;
 
 import org.springframework.http.HttpHeaders;
@@ -13,6 +10,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coelhocaique.wallet.dto.BaseDTO;
+import com.coelhocaique.wallet.exception.WalletException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +30,13 @@ public class ExceptionAdvice {
 	public ResponseEntity<BaseDTO> processParameterizedValidationError(MethodArgumentNotValidException ex) {
 		log.error(ex.getMessage(),ex);
 		return processError(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage(),HttpStatus.BAD_REQUEST);
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(WalletException.class)
+	public ResponseEntity<BaseDTO> processParameterizedValidationError(WalletException ex) {
+		log.error(ex.getMessage(),ex);
+		return processError(ex.getMessage(),HttpStatus.valueOf(ex.getStatusCode()));
 	}
 
 	private ResponseEntity<BaseDTO> processError(String error,HttpStatus headerStatus) {

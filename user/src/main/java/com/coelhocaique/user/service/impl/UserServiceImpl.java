@@ -55,6 +55,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public UserDTO authenticate(String key) {
 		String[] decodedKey = UserUtils.decodeKey(key);
+		
+		if(decodedKey.length < 1){
+			return UserParser.toDTO(HttpStatus.UNAUTHORIZED, Constants.INVALID_KEY);
+		}
+		
 		return userRepository.findByIdAndUsername(decodedKey[0], decodedKey[1])
 							.map(UserParser::toDTO)
 							.orElse(UserParser.toDTO(HttpStatus.UNAUTHORIZED, Constants.INVALID_KEY));

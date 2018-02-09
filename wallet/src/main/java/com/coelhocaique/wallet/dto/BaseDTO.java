@@ -4,6 +4,8 @@ import java.time.LocalDateTime;
 
 import org.springframework.http.HttpStatus;
 
+import com.coelhocaique.wallet.consts.Constants;
+
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,7 +18,7 @@ public class BaseDTO {
 	
 	private Integer code = HttpStatus.OK.value();
 	
-	private String returnMessage = "Sucessfully processed.";
+	private String returnMessage = Constants.SUCESSFULLY;
 	
 	private LocalDateTime requestDateTime = LocalDateTime.now();
 	

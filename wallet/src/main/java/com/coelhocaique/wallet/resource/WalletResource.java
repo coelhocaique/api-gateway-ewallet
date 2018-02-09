@@ -10,10 +10,13 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coelhocaique.wallet.consts.Constants;
 import com.coelhocaique.wallet.dto.WalletDTO;
+import com.coelhocaique.wallet.exception.WalletException;
 import com.coelhocaique.wallet.service.WalletService;
 
 @RequestMapping("/v1")
@@ -26,7 +29,10 @@ public class WalletResource {
 	@PostMapping
 	@Consumes(MediaType.APPLICATION_JSON_VALUE)
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<WalletDTO> create(@RequestBody @Valid WalletDTO walletDTO){
+	public ResponseEntity<WalletDTO> create(@RequestBody @Valid WalletDTO walletDTO,
+											@RequestHeader(value = Constants.AUTHORIZATION) String userKey) throws WalletException{
+		
+		walletDTO = walletService.create(walletDTO.setKey(userKey));
 		
 		return new ResponseEntity<WalletDTO>(walletDTO, HttpStatus.CREATED);
 	}	

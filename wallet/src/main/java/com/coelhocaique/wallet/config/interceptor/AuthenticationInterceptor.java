@@ -11,6 +11,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import com.coelhocaique.wallet.consts.Constants;
 import com.coelhocaique.wallet.dto.BaseDTO;
+import com.coelhocaique.wallet.exception.WalletException;
 import com.coelhocaique.wallet.feign.UserClient;
 
 @Component
@@ -25,11 +26,16 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
 		String userKey = request.getHeader(Constants.AUTHORIZATION);
 		
 		if(userKey == null){
-			return false;
+			throw new WalletException(HttpStatus.BAD_REQUEST.value(), "Header parameter missing.");
 		}
 		
 		ResponseEntity<BaseDTO> authenticated = userClient.authenticate(userKey);
 		
-        return authenticated.getStatusCode() == HttpStatus.OK;
+		if(authenticated.getStatusCode() != HttpStatus.OK){
+			BaseDTO baseDTO = authenticated.getBody();
+			throw new WalletException(baseDTO.getCode(),baseDTO.getReturnMessage());
+		}
+		
+        return true;
     }
 }

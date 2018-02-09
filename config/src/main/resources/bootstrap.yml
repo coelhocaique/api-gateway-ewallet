@@ -15,7 +15,7 @@ spring:
     config:
       server:
         git:
-          uri: file://${user.home}/workspace/api_gateway_ewallet/config-repo
+          uri: file://${user.home}/workspace/api-gateway-ewallet/config-repo
 management:
     security:
         enabled: false

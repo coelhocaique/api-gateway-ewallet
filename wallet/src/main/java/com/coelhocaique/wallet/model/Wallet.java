@@ -24,16 +24,16 @@ public class Wallet {
 	@Id
 	private String id;
 	
+	private String userId;
+	
 	private String cardholder;
 	
-	private Integer cardNumber;
+	private String cardNumber;
 	
 	private Integer expirationMonth;
 	
 	private Integer expirationYear;
-	
-	private Integer cvv;
-	
+		
 	private Integer bin;
 	
 	private Integer last4;

@@ -1,6 +1,7 @@
 package com.coelhocaique.user.resource;
 
 import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.Produces;
 
@@ -47,7 +48,7 @@ public class UserResource {
 	
 	@GetMapping("/auth/{key}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> authenticate(@PathVariable("key") String key){
+	public ResponseEntity<UserDTO> authenticate(@PathVariable("key") @NotNull String key){
 		
 		UserDTO userDTO = userService.authenticate(key);
 		
