@@ -1,7 +1,0 @@
-spring:
-    application:
-      name: user
-    jpa:
-        database: HSQL
-server:
-    port: 8081
