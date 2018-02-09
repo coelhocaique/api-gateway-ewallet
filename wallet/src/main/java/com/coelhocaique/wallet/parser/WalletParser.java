@@ -18,7 +18,7 @@ public class WalletParser {
 			String cardNumber = dto.getCardNumber();
 			String userKey = dto.getUserKey();
 			entity.setBin(Integer.valueOf(cardNumber.substring(0,6)));
-			entity.setLast4(Integer.valueOf(cardNumber.substring(7)));
+			entity.setLast4(Integer.valueOf(cardNumber.substring(cardNumber.length() - 5)));
 			entity.setUserId(WalletUtils.decodeKey(userKey)[0]);
 		}
 		
