@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
+import com.coelhocaique.user.consts.Constants;
 import com.coelhocaique.user.dto.UserDTO;
 import com.coelhocaique.user.model.User;
 import com.coelhocaique.user.parser.UserParser;
@@ -41,14 +42,14 @@ public class UserServiceImpl implements UserService {
 		user.ifPresent(userRepository::delete);
 							  
 		return user.map(UserParser::toDTO)
-					.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, "User not found."));
+					.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, Constants.USER_NOT_FOUND));
 	}
 
 	@Override
 	public UserDTO find(String id) {
 		return Optional.ofNullable(userRepository.findOne(id))
 						.map(UserParser::toDTO)
-						.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, "User not found."));
+						.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, Constants.USER_NOT_FOUND));
 	}
 
 	@Override
@@ -56,7 +57,7 @@ public class UserServiceImpl implements UserService {
 		String[] decodedKey = UserUtils.decodeKey(key);
 		return userRepository.findByIdAndUsername(decodedKey[0], decodedKey[1])
 							.map(UserParser::toDTO)
-							.orElse(UserParser.toDTO(HttpStatus.BAD_REQUEST, "Invalid key."));
+							.orElse(UserParser.toDTO(HttpStatus.UNAUTHORIZED, Constants.INVALID_KEY));
 	}
 
 }
