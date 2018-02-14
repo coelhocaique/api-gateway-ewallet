@@ -37,4 +37,6 @@ public class Wallet {
 	private Integer bin;
 	
 	private Integer last4;
+	
+	private boolean tokenized;
 }

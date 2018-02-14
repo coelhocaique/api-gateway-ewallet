@@ -18,7 +18,7 @@ public class WalletParser {
 			String cardNumber = dto.getCardNumber();
 			String userKey = dto.getUserKey();
 			entity.setBin(Integer.valueOf(cardNumber.substring(0,6)));
-			entity.setLast4(Integer.valueOf(cardNumber.substring(cardNumber.length() - 5)));
+			entity.setLast4(Integer.valueOf(cardNumber.substring(cardNumber.length() - 4)));
 			entity.setUserId(WalletUtils.decodeKey(userKey)[0]);
 		}
 		
@@ -30,7 +30,9 @@ public class WalletParser {
 		
 		if(entity != null){
 			dto = new WalletDTO();
-			BeanUtils.copyProperties(entity, dto);
+			dto.setId(entity.getId());
+			dto.setBin(entity.getBin());
+			dto.setLast4(entity.getLast4());
 		}
 		
 		return dto;
