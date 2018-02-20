@@ -1,6 +1,6 @@
 package com.coelhocaique.wallet.parser;
 
-import org.springframework.beans.BeanUtils;
+import org.apache.commons.codec.digest.Crypt;
 import org.springframework.http.HttpStatus;
 
 import com.coelhocaique.wallet.dto.WalletDTO;
@@ -9,17 +9,21 @@ import com.coelhocaique.wallet.utils.WalletUtils;
 
 public class WalletParser {
 	
-	public static Wallet toEntity(WalletDTO dto){
+	public static Wallet toEntity(WalletDTO dto, String userKey){
 		Wallet entity = null;
 		
 		if(dto != null){
-			entity = new Wallet();
-			BeanUtils.copyProperties(dto, entity);
 			String cardNumber = dto.getCardNumber();
-			String userKey = dto.getUserKey();
-			entity.setBin(Integer.valueOf(cardNumber.substring(0,6)));
-			entity.setLast4(Integer.valueOf(cardNumber.substring(cardNumber.length() - 4)));
-			entity.setUserId(WalletUtils.decodeKey(userKey)[0]);
+			
+			entity = Wallet.builder()
+						.cardholder(dto.getCardholder())
+						.expirationYear(Integer.valueOf(dto.getExpirationYear()))
+						.expirationMonth(Integer.valueOf(dto.getExpirationMonth()))
+						.bin(Integer.valueOf(cardNumber.substring(0,6)))
+						.last4(Integer.valueOf(cardNumber.substring(cardNumber.length() - 4)))
+						.userId(WalletUtils.decodeKey(userKey)[0])
+						.cardNumber(Crypt.crypt(cardNumber))
+						.build();
 		}
 		
 		return entity;
@@ -29,10 +33,8 @@ public class WalletParser {
 		WalletDTO dto = null;
 		
 		if(entity != null){
-			dto = new WalletDTO();
-			dto.setId(entity.getId());
-			dto.setBin(entity.getBin());
-			dto.setLast4(entity.getLast4());
+			dto = new WalletDTO(entity.getId(),entity.getBin(),entity.getLast4());
+							
 		}
 		
 		return dto;

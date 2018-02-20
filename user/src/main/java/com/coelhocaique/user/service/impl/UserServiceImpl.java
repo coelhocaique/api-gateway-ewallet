@@ -56,7 +56,7 @@ public class UserServiceImpl implements UserService {
 	public UserDTO authenticate(String key) {
 		String[] decodedKey = UserUtils.decodeKey(key);
 		
-		if(decodedKey.length < 1){
+		if(decodedKey.length < 2){
 			return UserParser.toDTO(HttpStatus.UNAUTHORIZED, Constants.INVALID_KEY);
 		}
 		

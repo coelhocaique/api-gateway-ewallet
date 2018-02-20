@@ -32,8 +32,8 @@ public class WalletResource {
 	public ResponseEntity<WalletDTO> create(@RequestBody @Valid WalletDTO walletDTO,
 											@RequestHeader(value = Constants.AUTHORIZATION) String userKey) throws WalletException{
 		
-		walletDTO = walletService.create(walletDTO.setKey(userKey));
+		walletDTO = walletService.create(walletDTO, userKey);
 		
 		return new ResponseEntity<WalletDTO>(walletDTO, HttpStatus.CREATED);
-	}	
+	}
 }

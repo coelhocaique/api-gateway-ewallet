@@ -41,8 +41,6 @@ public class WalletDTO extends BaseDTO {
 	@Length(max = 4, min = 3, message = Constants.CVV_LENGTH)
 	private String cvv;
 	
-	private String userKey;
-	
 	private Integer bin;
 	
 	private Integer last4;
@@ -54,8 +52,10 @@ public class WalletDTO extends BaseDTO {
 		super(code,returnMessage);
 	}
 	
-	public WalletDTO setKey(String userKey){
-		this.userKey = userKey;
-		return this;		
+	public WalletDTO(String id,Integer bin,Integer last4) {
+		super();
+		this.id = id;
+		this.bin = bin;
+		this.last4 = last4;
 	}
 }

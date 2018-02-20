@@ -25,4 +25,6 @@ public class Constants {
 	public static final String CVV_NOT_NULL = "CVV must be informed.";
 	
 	public static final String CVV_LENGTH = "CVV size is invalid.";
+	
+	public static final String CREDITCARD_EXPIRED = "Credit Card is expired.";
 }

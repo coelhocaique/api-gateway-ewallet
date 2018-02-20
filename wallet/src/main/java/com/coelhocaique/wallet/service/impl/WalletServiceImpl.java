@@ -13,6 +13,7 @@ import com.coelhocaique.wallet.parser.WalletParser;
 import com.coelhocaique.wallet.repository.WalletRepository;
 import com.coelhocaique.wallet.service.TokenService;
 import com.coelhocaique.wallet.service.WalletService;
+import com.coelhocaique.wallet.validation.WalletValidation;
 
 @Service
 public class WalletServiceImpl implements WalletService {
@@ -23,16 +24,19 @@ public class WalletServiceImpl implements WalletService {
 	@Autowired
 	private TokenService tokenService;
 	
+
 	@Override
-	public WalletDTO create(WalletDTO walletDTO) throws WalletException {
+	public WalletDTO create(WalletDTO walletDTO, String userKey) throws WalletException{
+		WalletValidation.validate(walletDTO);
 		
 		boolean tokenize = walletDTO.isTokenize();
 		
 		walletDTO = Optional.ofNullable(walletDTO)
-							.map(WalletParser::toEntity)
+							.map(e -> WalletParser.toEntity(e, userKey))
 							.map(walletRepository::save)
 							.map(WalletParser::toDTO)
 							.get();
+		
 		if(tokenize){
 			TokenDTO tokenDTO = tokenService.tokenize(walletDTO.getId());
 			Wallet wallet = walletRepository.findOne(walletDTO.getId());
@@ -44,6 +48,4 @@ public class WalletServiceImpl implements WalletService {
 		
 		return walletDTO;
 	}
-	
-
 }

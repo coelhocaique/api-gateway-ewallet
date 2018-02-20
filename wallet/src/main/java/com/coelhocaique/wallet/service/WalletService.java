@@ -5,6 +5,5 @@ import com.coelhocaique.wallet.exception.WalletException;
 
 public interface WalletService {
 	
-	WalletDTO create(WalletDTO walletDTO) throws WalletException;
-	
+	WalletDTO create(WalletDTO walletDTO, String userKey) throws WalletException;
 }
