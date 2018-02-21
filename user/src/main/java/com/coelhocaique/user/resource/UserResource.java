@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.coelhocaique.user.dto.UserDTO;
+import com.coelhocaique.user.exception.UserException;
 import com.coelhocaique.user.service.UserService;
 
 @RequestMapping("/v1")
@@ -48,7 +49,7 @@ public class UserResource {
 	
 	@GetMapping("/auth/{key}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> authenticate(@PathVariable("key") @NotNull String key){
+	public ResponseEntity<UserDTO> authenticate(@PathVariable("key") @NotNull String key) throws UserException{
 		
 		UserDTO userDTO = userService.authenticate(key);
 		
@@ -57,7 +58,7 @@ public class UserResource {
 	
 	@DeleteMapping("/{key}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> delete(@PathVariable("key") String key){
+	public ResponseEntity<UserDTO> delete(@PathVariable("key") String key) throws UserException{
 		
 		UserDTO userDTO = userService.delete(key);
 		

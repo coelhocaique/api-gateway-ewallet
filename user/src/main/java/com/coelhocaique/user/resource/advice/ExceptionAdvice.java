@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.coelhocaique.user.dto.BaseDTO;
+import com.coelhocaique.user.exception.UserException;
 
 import lombok.extern.slf4j.Slf4j;
 
@@ -32,6 +33,13 @@ public class ExceptionAdvice {
 	public ResponseEntity<BaseDTO> processParameterizedValidationError(MethodArgumentNotValidException ex) {
 		log.error(ex.getMessage(),ex);
 		return processError(ex.getBindingResult().getAllErrors().get(0).getDefaultMessage(),HttpStatus.BAD_REQUEST);
+	}
+	
+	@ResponseBody
+	@ExceptionHandler(UserException.class)
+	public ResponseEntity<BaseDTO> processParameterizedValidationError(UserException ex) {
+		log.error(ex.getMessage(),ex);
+		return processError(ex.getMessage(),HttpStatus.valueOf(ex.getStatusCode()));
 	}
 
 	private ResponseEntity<BaseDTO> processError(String error,HttpStatus headerStatus) {

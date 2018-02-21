@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.coelhocaique.user.consts.Constants;
 import com.coelhocaique.user.dto.UserDTO;
+import com.coelhocaique.user.exception.UserException;
 import com.coelhocaique.user.model.User;
 import com.coelhocaique.user.parser.UserParser;
 import com.coelhocaique.user.repository.UserRepository;
@@ -35,30 +36,26 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public UserDTO delete(String key) {
-		String[] decodedKey = UserUtils.decodeKey(key);
+	public UserDTO delete(String key) throws UserException {
+		String[] decodedKey = UserUtils.getValidDecodedKey(key);
 		Optional<User> user = userRepository.findByIdAndUsername(decodedKey[0], decodedKey[1]);
 											
 		user.ifPresent(userRepository::delete);
 							  
 		return user.map(UserParser::toDTO)
-					.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, Constants.USER_NOT_FOUND));
+					.orElse(UserParser.toDTO(HttpStatus.NOT_FOUND, Constants.USER_NOT_FOUND));
 	}
 
 	@Override
 	public UserDTO find(String id) {
 		return Optional.ofNullable(userRepository.findOne(id))
 						.map(UserParser::toDTO)
-						.orElse(UserParser.toDTO(HttpStatus.NO_CONTENT, Constants.USER_NOT_FOUND));
+						.orElse(UserParser.toDTO(HttpStatus.NOT_FOUND, Constants.USER_NOT_FOUND));
 	}
 
 	@Override
-	public UserDTO authenticate(String key) {
-		String[] decodedKey = UserUtils.decodeKey(key);
-		
-		if(decodedKey.length < 2){
-			return UserParser.toDTO(HttpStatus.UNAUTHORIZED, Constants.INVALID_KEY);
-		}
+	public UserDTO authenticate(String key) throws UserException {
+		String[] decodedKey = UserUtils.getValidDecodedKey(key);
 		
 		return userRepository.findByIdAndUsername(decodedKey[0], decodedKey[1])
 							.map(UserParser::toDTO)

@@ -17,11 +17,11 @@ public class WalletValidation {
 	private static void isCreditCardExpired(WalletDTO walletDTO) throws WalletException {
 		LocalDate currentDate = LocalDate.now();
 		int month = currentDate.getMonthValue();
-		int year = currentDate.getYear();
+		int year = Integer.parseInt(String.valueOf(currentDate.getYear()).substring(1));		
 		int expireMonth = Integer.parseInt(walletDTO.getExpirationMonth());
 		int expireYear = Integer.parseInt(walletDTO.getExpirationYear());
 		
-		if(expireYear > year || (expireYear == year && expireMonth > month)){
+		if(expireYear < year || (expireYear == year && expireMonth < month)){
 			throw new WalletException(HttpStatus.BAD_REQUEST.value(),Constants.CREDITCARD_EXPIRED);
 		}
 	}

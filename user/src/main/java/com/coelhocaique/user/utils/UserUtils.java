@@ -1,7 +1,10 @@
 package com.coelhocaique.user.utils;
 
+import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.codec.Base64;
 
+import com.coelhocaique.user.consts.Constants;
+import com.coelhocaique.user.exception.UserException;
 import com.coelhocaique.user.model.User;
 
 public class UserUtils {
@@ -23,5 +26,15 @@ public class UserUtils {
 	
 	public static String decodeBase64(String content){
 		return new String(Base64.decode(content.getBytes()));
+	}
+	
+	public static String[] getValidDecodedKey(String userKey) throws UserException{
+		String[] decodedKey = decodeKey(userKey);
+		
+		if(decodedKey.length < 2){
+			throw new UserException(HttpStatus.UNAUTHORIZED.value(), Constants.INVALID_KEY);
+		}
+		
+		return decodedKey;
 	}
 }

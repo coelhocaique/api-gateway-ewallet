@@ -18,9 +18,13 @@ public class Constants {
 	
 	public static final String EXPIRATION_MONTH_LENGTH = "Expiration month size is invalid.";
 	
+	public static final String EXPIRATION_MONTH_FORMAT = "Expiration month format is invalid.";
+	
 	public static final String EXPIRATION_YEAR_NOT_NULL = "Expiration year must be informed.";
 	
 	public static final String EXPIRATION_YEAR_LENGTH = "Expiration year size is invalid.";
+	
+	public static final String EXPIRATION_YEAR_FORMAT = "Expiration year format is invalid.";
 	
 	public static final String CVV_NOT_NULL = "CVV must be informed.";
 	

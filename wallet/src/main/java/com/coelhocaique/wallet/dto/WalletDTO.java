@@ -1,6 +1,7 @@
 package com.coelhocaique.wallet.dto;
 
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 import org.hibernate.validator.constraints.CreditCardNumber;
 import org.hibernate.validator.constraints.Length;
@@ -31,10 +32,12 @@ public class WalletDTO extends BaseDTO {
 	
 	@NotNull(message = Constants.EXPIRATION_MONTH_NOT_NULL)
 	@Length(max = 2, min = 2, message = Constants.EXPIRATION_MONTH_LENGTH)
+	@Pattern(regexp = "\\d+", message = Constants.EXPIRATION_MONTH_FORMAT )
 	private String expirationMonth;
 	
 	@NotNull(message = Constants.EXPIRATION_YEAR_NOT_NULL)
 	@Length(max = 2, min = 2, message = Constants.EXPIRATION_YEAR_LENGTH)
+	@Pattern(regexp = "\\d+", message = Constants.EXPIRATION_YEAR_FORMAT)
 	private String expirationYear;
 	
 	@NotNull(message = Constants.CVV_NOT_NULL)
