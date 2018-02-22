@@ -13,6 +13,7 @@ import org.springframework.http.HttpStatus;
 
 import com.coelhocaique.user.consts.TestConstants;
 import com.coelhocaique.user.dto.UserDTO;
+import com.coelhocaique.user.exception.UserException;
 import com.coelhocaique.user.model.User;
 import com.coelhocaique.user.repository.UserRepository;
 import com.coelhocaique.user.service.impl.UserServiceImpl;
@@ -54,7 +55,7 @@ public class UserServiceTest {
 	}
 	
 	@Test
-	public void find() {
+	public void find() throws UserException {
 		when(userRepository.findOne((String)any())).thenReturn(null);
 		UserDTO userDTO = userService.find("id");
 		

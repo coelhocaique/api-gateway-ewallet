@@ -9,7 +9,7 @@ public interface UserService {
 	
 	UserDTO delete(String key) throws UserException;
 
-	UserDTO find(String id);
+	UserDTO find(String key) throws UserException;
 
 	UserDTO authenticate(String key) throws UserException;
 }

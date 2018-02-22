@@ -14,9 +14,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.coelhocaique.user.consts.Constants;
 import com.coelhocaique.user.dto.UserDTO;
 import com.coelhocaique.user.exception.UserException;
 import com.coelhocaique.user.service.UserService;
@@ -38,18 +40,18 @@ public class UserResource {
 		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.CREATED);
 	}
 	
-	@GetMapping("/{id}")
+	@GetMapping("/{key}")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> get(@PathVariable("id") String id){
+	public ResponseEntity<UserDTO> get(@PathVariable("key") String key) throws UserException{
 		
-		UserDTO userDTO = userService.find(id);
+		UserDTO userDTO = userService.find(key);
 		
 		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.valueOf(userDTO.getCode()));
 	}
 	
-	@GetMapping("/auth/{key}")
+	@GetMapping("/authenticate")
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<UserDTO> authenticate(@PathVariable("key") @NotNull String key) throws UserException{
+	public ResponseEntity<UserDTO> authenticate(@RequestHeader(name = Constants.AUTHORIZATION) @NotNull String key) throws UserException{
 		
 		UserDTO userDTO = userService.authenticate(key);
 		

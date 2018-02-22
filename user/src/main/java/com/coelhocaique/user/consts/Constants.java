@@ -8,5 +8,5 @@ public class Constants {
 	
 	public static final String SUCESSFULLY = "Sucessfully processed.";
 	
-	
+	public static final String AUTHORIZATION = "Auth";
 }

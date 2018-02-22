@@ -18,7 +18,7 @@ import lombok.Setter;
 @Setter
 public class WalletDTO extends BaseDTO {
 	
-	private boolean tokenize;
+	private Boolean tokenize;
 	
 	private String id;
 	
@@ -57,6 +57,12 @@ public class WalletDTO extends BaseDTO {
 	
 	public WalletDTO(String id,Integer bin,Integer last4) {
 		super();
+		this.id = id;
+		this.bin = bin;
+		this.last4 = last4;
+	}
+	
+	public WalletDTO(String id,Integer bin,Integer last4, boolean tokenized) {
 		this.id = id;
 		this.bin = bin;
 		this.last4 = last4;

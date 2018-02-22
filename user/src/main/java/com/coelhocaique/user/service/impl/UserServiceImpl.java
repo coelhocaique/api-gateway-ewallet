@@ -47,8 +47,10 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public UserDTO find(String id) {
-		return Optional.ofNullable(userRepository.findOne(id))
+	public UserDTO find(String key) throws UserException {
+		String[] decodedKey = UserUtils.getValidDecodedKey(key);
+		
+		return userRepository.findByIdAndUsername(decodedKey[0], decodedKey[1])
 						.map(UserParser::toDTO)
 						.orElse(UserParser.toDTO(HttpStatus.NOT_FOUND, Constants.USER_NOT_FOUND));
 	}
