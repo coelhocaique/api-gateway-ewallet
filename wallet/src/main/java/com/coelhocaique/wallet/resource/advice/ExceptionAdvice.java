@@ -13,7 +13,6 @@ import com.coelhocaique.wallet.dto.BaseDTO;
 import com.coelhocaique.wallet.exception.WalletException;
 import com.netflix.hystrix.exception.HystrixRuntimeException;
 
-import feign.Feign;
 import feign.FeignException;
 import lombok.extern.slf4j.Slf4j;
 
@@ -44,7 +43,7 @@ public class ExceptionAdvice {
 	
 	@ResponseBody
 	@ExceptionHandler(HystrixRuntimeException.class)
-	public ResponseEntity<String> processParameterizedValidationError(HystrixRuntimeException ex) {
+	public ResponseEntity<Object> processParameterizedValidationError(HystrixRuntimeException ex) {
 		log.error(ex.getCause().getMessage(),ex.getCause());
 		if(ex.getCause() instanceof FeignException){
 			FeignException fe = (FeignException) ex.getCause();
@@ -52,7 +51,7 @@ public class ExceptionAdvice {
 			httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 			return new ResponseEntity<>(fe.getMessage(),httpHeaders,HttpStatus.valueOf(fe.status()));
 		}
-		throw ex;
+		return processParameterizedValidationError(ex);
 	}
 
 	private ResponseEntity<BaseDTO> processError(String error,HttpStatus headerStatus) {

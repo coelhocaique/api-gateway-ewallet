@@ -37,4 +37,8 @@ public class Constants {
 	public static final String ITEM_NOT_FOUND = "Wallet item not found. ";
 	
 	public static final String HEADER_MISSING = "Header parameter missing.";
+	
+	public static final String ALREADY_TOKENIZED = "Wallet item is already tokenized.";
+	
+	public static final String NOT_TOKENIZED = "Wallet item is not tokenized.";
 }

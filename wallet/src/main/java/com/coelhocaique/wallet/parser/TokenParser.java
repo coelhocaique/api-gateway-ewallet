@@ -17,4 +17,10 @@ public class TokenParser {
 		
 		return dto;
 	}
+	
+	public static Token toEntity(String walletId){
+		return Token.builder()
+					.walletId(walletId)
+					.build();
+	}
 }

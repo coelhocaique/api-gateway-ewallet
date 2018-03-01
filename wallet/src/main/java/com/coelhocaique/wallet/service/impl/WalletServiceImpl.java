@@ -26,8 +26,7 @@ public class WalletServiceImpl implements WalletService {
 	
 	@Override
 	public WalletResponseDTO create(WalletRequestDTO walletDTO, String userKey) throws WalletException{
-		WalletValidation.validate(walletDTO);
-			
+		WalletValidation.validateWalletRequest(walletDTO);
 		return Optional.of(walletDTO)
 						.map(e -> WalletParser.toEntity(e, userKey))
 						.map(walletRepository::save)
@@ -48,9 +47,8 @@ public class WalletServiceImpl implements WalletService {
 		String userId = WalletUtils.decodeKey(userKey)[0];
 		return walletRepository.findByUserId(userId)
 								.map(WalletParser::toDTOs)
-								.orElseThrow(() -> new WalletException(HttpStatus.NOT_FOUND, Constants.ITEM_NOT_FOUND));
+								.orElseThrow(() -> new WalletException(HttpStatus.NOT_FOUND, Constants.WALLET_EMPTY));
 	}
-
 
 	@Override
 	public WalletResponseDTO delete(String id, String userKey) throws WalletException {

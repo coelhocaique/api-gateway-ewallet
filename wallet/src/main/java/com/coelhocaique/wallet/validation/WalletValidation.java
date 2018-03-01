@@ -1,20 +1,22 @@
 package com.coelhocaique.wallet.validation;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 
 import com.coelhocaique.wallet.consts.Constants;
 import com.coelhocaique.wallet.dto.WalletRequestDTO;
 import com.coelhocaique.wallet.exception.WalletException;
+import com.coelhocaique.wallet.model.Wallet;
 
 public class WalletValidation {
 	
-	public static void validate(WalletRequestDTO walletDTO) throws WalletException{
-		isCreditCardExpired(walletDTO);
+	public static void validateWalletRequest(WalletRequestDTO walletDTO) throws WalletException{
+		creditCardExpired(walletDTO);
 	}
 
-	private static void isCreditCardExpired(WalletRequestDTO walletDTO) throws WalletException {
+	private static void creditCardExpired(WalletRequestDTO walletDTO) throws WalletException {
 		LocalDate currentDate = LocalDate.now();
 		int month = currentDate.getMonthValue();
 		int year = Integer.parseInt(String.valueOf(currentDate.getYear()).substring(1));		
@@ -24,5 +26,22 @@ public class WalletValidation {
 		if(expireYear < year || (expireYear == year && expireMonth < month)){
 			throw new WalletException(HttpStatus.BAD_REQUEST,Constants.CREDITCARD_EXPIRED);
 		}
+	}
+	
+	public static void validateTokenization(Optional<Wallet> optional) throws WalletException {
+		validateNull(optional);
+		optional.filter(w -> !w.isTokenized())
+				.orElseThrow(() -> new WalletException(HttpStatus.BAD_REQUEST, Constants.ALREADY_TOKENIZED));
+	}
+	
+	public static void validateWalletToken(Optional<Wallet> optional) throws WalletException {
+		validateNull(optional);
+		optional.filter(w -> w.isTokenized())
+				.orElseThrow(() -> new WalletException(HttpStatus.NOT_FOUND, Constants.NOT_TOKENIZED));
+	}
+	
+	
+	private static void validateNull(Optional<Wallet> optional) throws WalletException {
+		optional.orElseThrow(() -> new WalletException(HttpStatus.NOT_FOUND, Constants.ITEM_NOT_FOUND));
 	}
 }
