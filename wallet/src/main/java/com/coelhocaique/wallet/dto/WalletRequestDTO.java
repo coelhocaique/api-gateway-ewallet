@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.Length;
 
 import com.coelhocaique.wallet.consts.Constants;
 
-import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -16,11 +15,7 @@ import lombok.Setter;
 @NoArgsConstructor
 @Getter
 @Setter
-public class WalletDTO extends BaseDTO {
-	
-	private Boolean tokenize;
-	
-	private String id;
+public class WalletRequestDTO{
 	
 	@NotNull(message = Constants.CARDHOLDER_NOT_NULL)
 	@Length(max = 50,message = Constants.CARDHOLDER_LENGTH)
@@ -43,28 +38,4 @@ public class WalletDTO extends BaseDTO {
 	@NotNull(message = Constants.CVV_NOT_NULL)
 	@Length(max = 4, min = 3, message = Constants.CVV_LENGTH)
 	private String cvv;
-	
-	private Integer bin;
-	
-	private Integer last4;
-	
-	private String token;
-	
-	@Builder
-	private WalletDTO(Integer code, String returnMessage) {
-		super(code,returnMessage);
-	}
-	
-	public WalletDTO(String id,Integer bin,Integer last4) {
-		super();
-		this.id = id;
-		this.bin = bin;
-		this.last4 = last4;
-	}
-	
-	public WalletDTO(String id,Integer bin,Integer last4, boolean tokenized) {
-		this.id = id;
-		this.bin = bin;
-		this.last4 = last4;
-	}
 }

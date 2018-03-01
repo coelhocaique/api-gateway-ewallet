@@ -36,7 +36,7 @@ public class ExceptionAdvice {
 	@ExceptionHandler(WalletException.class)
 	public ResponseEntity<BaseDTO> processParameterizedValidationError(WalletException ex) {
 		log.error(ex.getMessage(),ex);
-		return processError(ex.getMessage(),HttpStatus.valueOf(ex.getStatusCode()));
+		return processError(ex.getMessage(),ex.getStatusCode());
 	}
 
 	private ResponseEntity<BaseDTO> processError(String error,HttpStatus headerStatus) {

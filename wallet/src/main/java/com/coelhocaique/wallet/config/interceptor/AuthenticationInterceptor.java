@@ -26,14 +26,14 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
 		String userKey = request.getHeader(Constants.AUTHORIZATION);
 		
 		if(userKey == null){
-			throw new WalletException(HttpStatus.BAD_REQUEST.value(), "Header parameter missing.");
+			throw new WalletException(HttpStatus.BAD_REQUEST, Constants.HEADER_MISSING);
 		}
 		
 		ResponseEntity<BaseDTO> authenticated = userClient.authenticate(userKey);
 		
 		if(authenticated.getStatusCode() != HttpStatus.OK){
 			BaseDTO baseDTO = authenticated.getBody();
-			throw new WalletException(baseDTO.getCode(),baseDTO.getReturnMessage());
+			throw new WalletException(HttpStatus.valueOf(baseDTO.getCode()),baseDTO.getReturnMessage());
 		}
 		
         return true;

@@ -34,9 +34,9 @@ public class Wallet {
 	
 	private Integer expirationYear;
 		
-	private Integer bin;
+	private String bin;
 	
-	private Integer last4;
+	private String last4;
 	
 	private boolean tokenized;
 }

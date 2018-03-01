@@ -1,7 +1,7 @@
 package com.coelhocaique.wallet.templates;
 
 import com.coelhocaique.wallet.consts.TestConstants;
-import com.coelhocaique.wallet.dto.WalletDTO;
+import com.coelhocaique.wallet.dto.WalletResponseDTO;
 
 import br.com.six2six.fixturefactory.Fixture;
 import br.com.six2six.fixturefactory.Rule;
@@ -11,7 +11,7 @@ public class WalletDTOTemplate implements TemplateLoader{
 
 	@Override
 	public void load() {
-		Fixture.of(WalletDTO.class).addTemplate(TestConstants.WALLET_DTO, new Rule(){{
+		Fixture.of(WalletResponseDTO.class).addTemplate(TestConstants.WALLET_DTO, new Rule(){{
 		
 		}});	
 	}

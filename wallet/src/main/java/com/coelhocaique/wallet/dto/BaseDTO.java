@@ -15,7 +15,6 @@ import lombok.Setter;
 @Setter
 public class BaseDTO {
 	
-	
 	private Integer code = HttpStatus.OK.value();
 	
 	private String returnMessage = Constants.SUCESSFULLY;
