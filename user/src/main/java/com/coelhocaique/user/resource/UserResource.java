@@ -1,5 +1,7 @@
 package com.coelhocaique.user.resource;
 
+import java.util.List;
+
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import javax.ws.rs.Consumes;
@@ -47,6 +49,15 @@ public class UserResource {
 		UserDTO userDTO = userService.find(key);
 		
 		return new ResponseEntity<UserDTO>(userDTO, HttpStatus.valueOf(userDTO.getCode()));
+	}
+	
+	@GetMapping
+	@Produces(MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity<List<UserDTO>> get() throws UserException{
+		
+		List<UserDTO> userDTOs = userService.findAll();
+		
+		return new ResponseEntity<List<UserDTO>>(userDTOs, HttpStatus.OK);
 	}
 	
 	@GetMapping("/authenticate")

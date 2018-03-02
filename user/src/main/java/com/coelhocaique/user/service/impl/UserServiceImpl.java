@@ -1,5 +1,6 @@
 package com.coelhocaique.user.service.impl;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,6 +55,13 @@ public class UserServiceImpl implements UserService {
 						.map(UserParser::toDTO)
 						.orElse(UserParser.toDTO(HttpStatus.NOT_FOUND, Constants.USER_NOT_FOUND));
 	}
+	
+	@Override
+	public List<UserDTO> findAll() throws UserException {
+		return Optional.ofNullable(userRepository.findAll())
+						.map(UserParser::toDTOs)
+						.orElseThrow(() -> new UserException(HttpStatus.NOT_FOUND.value(), Constants.USER_NOT_FOUND));
+	}
 
 	@Override
 	public UserDTO authenticate(String key) throws UserException {
@@ -63,5 +71,4 @@ public class UserServiceImpl implements UserService {
 							.map(UserParser::toDTO)
 							.orElse(UserParser.toDTO(HttpStatus.UNAUTHORIZED, Constants.INVALID_KEY));
 	}
-
 }
