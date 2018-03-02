@@ -9,12 +9,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.coelhocaique.wallet.consts.Constants;
 import com.coelhocaique.wallet.dto.BaseDTO;
+import com.coelhocaique.wallet.exception.WalletException;
+import com.coelhocaique.wallet.feign.fallbacks.UserClientFallback;
 
-@FeignClient("user")
+@FeignClient(name="user",fallback = UserClientFallback.class)
 public interface UserClient {
 	
 	@RequestMapping(value = "/v1/authenticate",
 					method = RequestMethod.GET,
 					produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity<BaseDTO> authenticate(@RequestHeader(name = Constants.AUTHORIZATION) String key);
+	public ResponseEntity<BaseDTO> authenticate(@RequestHeader(name = Constants.AUTHORIZATION) String key) throws WalletException;
 }

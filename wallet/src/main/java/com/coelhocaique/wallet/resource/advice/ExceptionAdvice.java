@@ -51,7 +51,7 @@ public class ExceptionAdvice {
 			httpHeaders.setContentType(MediaType.APPLICATION_JSON);
 			return new ResponseEntity<>(fe.getMessage(),httpHeaders,HttpStatus.valueOf(fe.status()));
 		}
-		return processParameterizedValidationError(ex);
+		return null;
 	}
 
 	private ResponseEntity<BaseDTO> processError(String error,HttpStatus headerStatus) {

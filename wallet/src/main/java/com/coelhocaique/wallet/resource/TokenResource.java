@@ -46,7 +46,7 @@ public class TokenResource {
 		return new ResponseEntity<TokenDTO>(tokenDTO, HttpStatus.OK);
 	}
 	
-	@DeleteMapping("/{id}")
+	@DeleteMapping
 	@Produces(MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity<TokenDTO> delete(@PathVariable("walletId") String walletId,
 													@RequestHeader(value = Constants.AUTHORIZATION) String userKey) throws WalletException{

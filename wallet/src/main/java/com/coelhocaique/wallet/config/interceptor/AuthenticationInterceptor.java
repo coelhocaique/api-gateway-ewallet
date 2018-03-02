@@ -33,7 +33,7 @@ public class AuthenticationInterceptor extends HandlerInterceptorAdapter{
 		
 		if(authenticated.getStatusCode() != HttpStatus.OK){
 			BaseDTO baseDTO = authenticated.getBody();
-			throw new WalletException(HttpStatus.valueOf(baseDTO.getCode()),baseDTO.getReturnMessage());
+			throw new WalletException(authenticated.getStatusCode(),baseDTO.getReturnMessage());
 		}
 		
         return true;

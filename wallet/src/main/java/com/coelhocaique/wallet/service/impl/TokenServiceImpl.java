@@ -60,10 +60,15 @@ public class TokenServiceImpl implements TokenService {
 	@Override
 	public TokenDTO delete(String walletId, String userKey) throws WalletException {
 		String userId = WalletUtils.decodeKey(userKey)[0];
-		WalletValidation.validateWalletToken(findWallet(walletId, userId));
+		Optional<Wallet> optional = findWallet(walletId, userId);
+		WalletValidation.validateWalletToken(optional);
 		Optional<Token> token = tokenRepository.findByWalletId(walletId);
 		
 		token.ifPresent(tokenRepository::delete);
+		
+		Wallet wallet = optional.get();
+		wallet.setTokenized(false);
+		walletRepository.save(wallet);
 		
 		return token.map(TokenParser::toDTO).get();
 	}

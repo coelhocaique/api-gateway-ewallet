@@ -41,4 +41,6 @@ public class Constants {
 	public static final String ALREADY_TOKENIZED = "Wallet item is already tokenized.";
 	
 	public static final String NOT_TOKENIZED = "Wallet item is not tokenized.";
+	
+	public static final String SERVER_ERROR = "Sorry, we have a problem with our servers. Please try again later.";
 }
