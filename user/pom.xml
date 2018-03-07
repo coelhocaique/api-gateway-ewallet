@@ -61,8 +61,16 @@
 			<artifactId>spring-cloud-starter-hystrix</artifactId>
 		</dependency>
 		<dependency>
+ 			<groupId>org.springframework.boot</groupId> 
+ 			<artifactId>spring-boot-starter-security</artifactId>
+ 		</dependency> 
+		<dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -92,11 +100,6 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
-
-		<!--cache <dependency>
-			<groupId>com.hazelcast</groupId>
-			<artifactId>hazelcast-spring</artifactId>
-		</dependency> -->
 
 		<dependency>
 			<groupId>com.fasterxml.jackson.datatype</groupId>
