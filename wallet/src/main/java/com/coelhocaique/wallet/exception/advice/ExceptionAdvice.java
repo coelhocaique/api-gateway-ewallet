@@ -1,4 +1,4 @@
-package com.coelhocaique.wallet.resource.advice;
+package com.coelhocaique.wallet.exception.advice;
 
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -44,7 +44,7 @@ public class ExceptionAdvice {
 	@ResponseBody
 	@ExceptionHandler(HystrixRuntimeException.class)
 	public ResponseEntity<Object> processParameterizedValidationError(HystrixRuntimeException ex) {
-		log.error(ex.getCause().getMessage(),ex.getCause());
+		log.error(ex.getMessage(),ex);
 		if(ex.getCause() instanceof FeignException){
 			FeignException fe = (FeignException) ex.getCause();
 			HttpHeaders httpHeaders = new HttpHeaders();

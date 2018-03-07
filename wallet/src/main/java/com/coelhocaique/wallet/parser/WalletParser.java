@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.apache.commons.codec.digest.Crypt;
-import org.apache.commons.collections.CollectionUtils;
+import org.springframework.util.CollectionUtils;
 
 import com.coelhocaique.wallet.dto.WalletRequestDTO;
 import com.coelhocaique.wallet.dto.WalletResponseDTO;
@@ -51,7 +51,7 @@ public class WalletParser {
 	public static List<WalletResponseDTO> toDTOs(List<Wallet> entities){
 		List<WalletResponseDTO> dtos = null;
 		
-		if(CollectionUtils.isNotEmpty(entities)){
+		if(!CollectionUtils.isEmpty(entities)){
 			dtos = entities.stream()
 					.map(WalletParser::toDTO)
 					.collect(Collectors.toList());
