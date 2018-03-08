@@ -25,7 +25,7 @@ public class UserAuthenticationEntryPoint extends BasicAuthenticationEntryPoint 
 
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		setRealmName("User Application");
+		setRealmName("USER_APP");
 		super.afterPropertiesSet();
 	}
 }

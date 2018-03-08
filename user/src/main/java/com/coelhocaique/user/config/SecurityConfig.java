@@ -6,6 +6,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.config.http.SessionCreationPolicy;
 
 import com.coelhocaique.user.security.UserAuthenticationEntryPoint;
 
@@ -19,17 +20,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Autowired
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
         auth.inMemoryAuthentication()
-          .withUser("admin").password("admin")
-          .authorities("ROLE_USER");
+          	 .withUser("admin")
+          	 .password("admin")
+          	 .roles("ADMIN");
     }
  
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-          .antMatchers("/v1/authenticate").permitAll()
-          .anyRequest().authenticated()
-          .and()
-          .httpBasic()
-          .authenticationEntryPoint(authenticationEntryPoint);
+			        .antMatchers("/swagger-ui.html","/v1/authenticate")
+			        .permitAll()
+			        .antMatchers("/v1/**")
+			        .authenticated()
+			        .and()
+			        .httpBasic()
+			        .authenticationEntryPoint(authenticationEntryPoint)
+			        .and()
+			        .sessionManagement()
+			        .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+			        .and()
+			        .csrf()
+			        .disable();
     }
 }
