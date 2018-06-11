@@ -1,7 +1,8 @@
 package com.coelhocaique.user.utils;
 
+import java.util.Base64;
+
 import org.springframework.http.HttpStatus;
-import org.springframework.security.crypto.codec.Base64;
 
 import com.coelhocaique.user.consts.Constants;
 import com.coelhocaique.user.exception.UserException;
@@ -16,7 +17,7 @@ public class UserUtils {
 	}
 	
 	public static String encodeBase64(String content){
-		return new String(Base64.encode(content.getBytes()));
+		return new String(Base64.getEncoder().encode(content.getBytes()));
 	}
 	
 	public static String[] decodeKey(String key){
@@ -25,7 +26,7 @@ public class UserUtils {
 	}
 	
 	public static String decodeBase64(String content){
-		return new String(Base64.decode(content.getBytes()));
+		return new String(Base64.getDecoder().decode(content.getBytes()));
 	}
 	
 	public static String[] getValidDecodedKey(String userKey) throws UserException{

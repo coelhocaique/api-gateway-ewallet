@@ -1,8 +1,9 @@
 package com.coelhocaique.user.service;
 
-import static org.mockito.Mockito.when;
 import static org.junit.Assert.assertEquals;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.when;
+
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -56,7 +57,7 @@ public class UserServiceTest {
 	
 	@Test
 	public void find() throws UserException {
-		when(userRepository.findOne((String)any())).thenReturn(null);
+		when(userRepository.findByIdAndUsername(any(),any())).thenReturn(null);
 		UserDTO userDTO = userService.find("id");
 		
 		assertEquals(new Integer(HttpStatus.NO_CONTENT.value()), userDTO.getCode());
