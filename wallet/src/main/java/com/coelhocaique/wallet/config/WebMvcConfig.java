@@ -3,12 +3,12 @@ package com.coelhocaique.wallet.config;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import com.coelhocaique.wallet.config.interceptor.AuthenticationInterceptor;
 
 @Configuration
-public class WebMvcConfig extends WebMvcConfigurerAdapter {
+public class WebMvcConfig implements WebMvcConfigurer{
 	
 	@Autowired
 	private AuthenticationInterceptor authenticationInterceptor;

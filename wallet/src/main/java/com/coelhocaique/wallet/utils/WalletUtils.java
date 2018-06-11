@@ -1,6 +1,6 @@
 package com.coelhocaique.wallet.utils;
 
-import org.springframework.security.crypto.codec.Base64;
+import java.util.Base64;
 
 public class WalletUtils {
 	
@@ -10,6 +10,6 @@ public class WalletUtils {
 	}
 	
 	public static String decodeBase64(String content){
-		return new String(Base64.decode(content.getBytes()));
+		return new String(Base64.getDecoder().decode(content.getBytes()));
 	}
 }
